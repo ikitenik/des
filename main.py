@@ -3,7 +3,7 @@ from PyQt5.QtCore import QEventLoop
 from PyQt5.QtWidgets import QMessageBox, QDialog, QFileDialog, QVBoxLayout,QLabel
 from PyQt5.QtWidgets import QApplication
 import threading
-from os import path
+from os import path, getcwd
 from random import randint
 import traceback
 import clipboard
@@ -443,8 +443,9 @@ class Ui_MainWindow(object):
                     file_name += " (зашифрованный)"
                 else:
                     file_name += " (расшифрованный)"
+                cwd = getcwd()[2:].replace('\\', '/')
                 file = QFileDialog.getSaveFileName(None, f"Сохранить {file_type} файл",
-                                                   f"/учеба/8 семестр/КМЗИ/lab16/файлы/{file_name}",
+                                                   f"{cwd}/файлы/{file_name}",
                                                    f"(*{file_extension});;Все файлы (*)")[0]
                 if file:
                     with open(file, 'wb') as f:
@@ -762,8 +763,9 @@ class Ui_MainWindow(object):
         if param == 8:
             file_type = "вектора инициализации"
             file_name = "вектор"
+        cwd = getcwd()[2:].replace('\\', '/')
         file = QFileDialog.getOpenFileName(None, f"Загрузить файл {file_type}",
-                                           f"/учеба/8 семестр/КМЗИ/lab16/параметры/{file_name}_1.txt", "(*.txt)")[0]
+                                           f"{cwd}/параметры/{file_name}_1.txt", "(*.txt)")[0]
 
         if file == "":
             return
@@ -820,10 +822,10 @@ class Ui_MainWindow(object):
             if self.key == "":
                 self.error_input("Сначала определите ключ")
                 return
-
+        cwd = getcwd()[2:].replace('\\', '/')
         file = \
         QFileDialog.getSaveFileName(None, f"Сохранить файл {file_type}",
-                                    f"/учеба/8 семестр/КМЗИ/lab16/параметры/{file_name}_1",
+                                    f"{cwd}/параметры/{file_name}_1",
                                     "(*.txt)")[0]
         if file:
             with open(file, 'w') as f:
@@ -886,8 +888,9 @@ class Ui_MainWindow(object):
         self.mode = mode
 
     def select_file(self):
+        cwd = getcwd()[2:].replace('\\', '/')
         file = QFileDialog.getOpenFileName(None, f"Загрузить файл",
-                                           f"/учеба/8 семестр/КМЗИ/lab16/файлы/1.txt")[0]
+                                           f"{cwd}/файлы/1.txt")[0]
         if file == "":
             return
         self.input_file_name.setText(path.basename(file))
